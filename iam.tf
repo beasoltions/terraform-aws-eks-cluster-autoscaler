@@ -6,11 +6,13 @@ data "aws_iam_policy_document" "kubernetes_cluster_autoscaler" {
     actions = [
       "autoscaling:DescribeAutoScalingGroups",
       "autoscaling:DescribeAutoScalingInstances",
+      "autoscaling:DescribeInstances",
       "autoscaling:DescribeLaunchConfigurations",
       "autoscaling:DescribeTags",
       "autoscaling:SetDesiredCapacity",
       "autoscaling:TerminateInstanceInAutoScalingGroup",
-      "ec2:DescribeLaunchTemplateVersions"
+      "ec2:DescribeLaunchTemplateVersions",
+      "ec2:DescribeInstanceTypes"
     ]
     resources = [
       "*",
