@@ -23,6 +23,21 @@ Before deploying the Cluster Autoscaler, you must meet the following prerequisit
 ## Usage
 
 ```
+provider "kubernetes" {
+  alias                  = "eks"
+  host                   = data.aws_eks_cluster.cluster.endpoint
+  token                  = data.aws_eks_cluster_auth.cluster.token
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
+}
+
+provider "helm" {
+  alias = "eks"
+  kubernetes {
+    host                   = data.aws_eks_cluster.cluster.endpoint
+    token                  = data.aws_eks_cluster_auth.cluster.token
+    cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority[0].data)
+  }
+}
 module "cluster_autoscaler" {
   source = "git::https://github.com/getmiso/terraform-aws-eks-cluster-autoscaler.git"
 
